@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="lib/ch.qos.logback.classic_1.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/ch.qos.logback.core_1.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/org.openscada.external.jcifs_1.2.25.201303051448.jar"/>
+	<classpathentry kind="lib" path="lib/org.openscada.jinterop.core_2.0.8.201303051454.jar"/>
+	<classpathentry kind="lib" path="lib/org.openscada.jinterop.deps_1.0.0.201303051454.jar"/>
+	<classpathentry kind="lib" path="lib/org.openscada.opc.dcom_1.0.0.201303051455.jar"/>
+	<classpathentry kind="lib" path="lib/org.openscada.opc.lib_1.0.0.201303051455.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j.api_1.6.4.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/JADE-bin-4.5.0/jade/lib/jade.jar"/>
+	<classpathentry kind="lib" path="lib/JADE-examples-4.5.0/jade/lib/jadeExamples.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
