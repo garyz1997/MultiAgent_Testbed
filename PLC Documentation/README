@@ -1,0 +1,68 @@
+"PLC Documentation" Folder README
+
+Date Created: 2017/12/10
+Edits:
+
+// ********** // ********** // ********** // ********** // ********** //
+
+v "Training"
+    This folder contains files used for training new students
+    > "PLC Training Material Compilation and Examples"
+  	    Main document with most information as well as sample
+  	    exercises for ladder logic programming and solutions. Word
+  	    document is for adding material, PDF is for read-only.
+    > "PLC Intro to Programming"
+        Introduciton to PLC programming using Studio 5000
+    > "PLC Intro to Ladder Diagram"
+  		Introduction to IEC1131-3 ladder logic by Rockwell Automation
+    > "PLC Basic Training W17"
+  		Training by Christopher Shu (shuchris) and Gibin Zachariah
+  		(gibinzac)
+    > "PLC Basic Training F17"
+  	    Training by Ziyan Zhang
+v "Production Planning"
+	> "Part and Process Numbers"
+		Document lists each of the three parts in the production line
+		and assigns process numbers and describes process for each one
+	> "Routing Plan"
+		Slides that describe routing plan for each of the three machined
+		parts in the MDP truck. Includes test bed floor plan, part and
+		process numbers, flow diagram, and descriptions for each
+		machining operations (CNC to be machined in, tools, process,
+		timing).
+	v "2017 Winter"
+		> "Event-tags-signals"
+		> "Flow diagram (demo)"
+		> "Flow diagram (full)"
+		> "Machine Process W17 to F17"
+			Winter 2017 routing plan for MDP truck with edits for F17
+	v "Floorplan"
+		> "5262E01"
+			Test bed floor plan drawing by DESIGNER'S EDGE, INC.
+		> "Floorplan"
+			PDF for read only, SLDDRW and SLDPRT for editing
+v "Routines"
+	> "Routine rung comments and tags (incomplete)"
+	v "YYYY-MM-DD"
+		Dated folders with PDF files of .ACD routines (in Studio 5000 
+		Logix Designer, right click to print and save as .xps, then use
+		a converter to PDF). Edited routines kept here for future
+		reference or making routine edits remotely. May includes
+		folders with screenshots of trended tags during testing	("Tag
+		Trends")
+v "Tag Documentation"
+	> "PLC Tags Descriptions (main)"
+	> "PLC Tags Mapped to FANUC Digital IOs"
+	> "PLC Tags Mapped to VBAI IO"
+		Vision Builder for Automated Inspection
+	> "PLC Tags - VBAI Tags - RFID Address List"
+	v "Tag Dictionary"
+		Original files before F17
+v "RFID Tag Updating"
+	> "56rf-um001_-en-p"
+		Rockwell Automation RFID manual
+	> "RFID Tag Updating PLC Programming Attempts"
+		Documentation for routine edits to update process numbers on 
+		RFID sticker tags after specific operations (machining,
+		flipping, inspection, etc.)
+	> "Routine tags for Cell 1 and RFID 1"
