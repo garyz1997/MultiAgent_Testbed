@@ -1,27 +1,39 @@
 package Agents;
 
-import BookSellerAgent.PurchaseOrdersServer;
+//import BookSellerAgent.PurchaseOrdersServer;
 import jade.core.Agent;
 import jade.core.behaviours.*;
 
 
 public class rfid3 extends Agent{
-	private Client opc = null;
-	
+		//Comment out one of the following depending on which OPC language to use for connection and change  usePython above
+		
+		//Use Utgard OPC client (Java):
+		//private Client opc = null;
+		
+		//Use OpenOPC (Python)
+		private ClientPython opc=null;
+		
 	protected void setup(){
 		System.out.println(getAID().getName()+" is ready.");
+	
 		String[] allTags=new String[]{"Test.PLC.Message1","Test.PLC.Message2","Test.PLC.Message3"};
-		opc=new Client(allTags);
+		//Comment out following if not using Utgard
+		//opc=new Client(allTags);
+		
+		opc=new ClientPython();
+		
 		opc.init();
 		opc.connect();
 		opc.doRead();
+			
 		try{
-		Thread.sleep(5000);
+		Thread.sleep(1000);
 		}catch(Exception e){}
 		System.out.println(opc.getValue("Test.PLC.Message1"));
 		System.out.println(opc.getValue("Test.PLC.Message2"));
 		System.out.println(opc.getValue("Test.PLC.Message3"));
-		addBehaviour(new checkPartPresent(this,100));
+		//addBehaviour(new checkPartPresent(this,100));
 		opc.closeConnection();
 	}
 	
@@ -62,7 +74,7 @@ public class rfid3 extends Agent{
 	}
 	protected void takeDown() {
 		// Printout a dismissal message
-		opc.closeConnection();
+		//opc.closeConnection();
 		System.out.println(getAID().getName()+" terminating.");
 	}
 

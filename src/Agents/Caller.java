@@ -3,6 +3,7 @@ package Agents;
 public class Caller {
 	public static void main(String[] args) throws Exception{
 		String[] allTags=new String[]{"Test.PLC.Message1","Test.PLC.Message2","Test.PLC.Message3"};
+		//String[] allTags=new String[]{"[AdvManLab]Message1","Test.PLC.Message2","Test.PLC.Message3"};
 		Client clientClass=new Client(allTags);
 		clientClass.init();
 		clientClass.connect();
@@ -15,12 +16,11 @@ public class Caller {
 		//System.out.println(clientClass.getValue("Test.PLC.Message3"));
 		//System.out.println("Done Done Done Done");
 		System.out.println("\n\n");
-		for(int i=0;i<10;i++){
+		for(int i=0;i<3;i++){
 			clientClass.doWrite("Test.PLC.Message1", String.format("%s", i));
-			Thread.sleep(1000);
+			Thread.sleep(200);
 			System.out.println(clientClass.getValue("Test.PLC.Message1"));
 		}
-		Thread.sleep(10000);
 		clientClass.closeConnection();
 	}
 }

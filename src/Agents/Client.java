@@ -68,6 +68,7 @@ public class Client {
         ci.setUser("Lakshu");
         ci.setPassword(password);
     	ci.setClsid("7BC0CC8E-482C-47CA-ABDC-0FE7F9C6E729");
+        //ci.setProgId("Kepware.KEPServerEX.V6");
     	//itemId = "Test.PLC.Message1";
     	// create a new server
     	server = new Server(ci, Executors.newSingleThreadScheduledExecutor());
