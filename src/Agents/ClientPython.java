@@ -9,7 +9,7 @@ public class ClientPython {
 		Runtime rt = Runtime.getRuntime();
 		Process pr;
 		try {
-			pr = rt.exec("python " + System.getProperty("user.dir")+"\\src\\Agents\\PythonOPC.py " + String.format("%s", tagName));
+			pr = rt.exec("python " + System.getProperty("user.dir")+"\\src\\Agents\\PythonOPCRead.py " + tagName);
 			BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
 			BufferedReader stdError = new BufferedReader(new 
 				     InputStreamReader(pr.getErrorStream()));
@@ -25,6 +25,16 @@ public class ClientPython {
 			e.printStackTrace();
 		}
 		return "Error";
+	}
+	public void doWrite(String tagName, String newValue){
+		Runtime rt = Runtime.getRuntime();
+		Process pr;
+		try {
+			pr = rt.exec("python " + System.getProperty("user.dir")+"\\src\\Agents\\PythonOPCWrite.py " + tagName + " " + newValue);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	//These empty methods are just to make this class look like Java client class
 	public void closeConnection(){

@@ -7,8 +7,9 @@ public class PythonCaller {
 		String tagName = "Test.PLC.Message1";
 		ClientPython clientClass=new ClientPython();
 		String result = clientClass.getValue(tagName);
-		for(int i=0; i < 5; i++){
+		for(int i=0; i < 10; i++){
 			result = clientClass.getValue(tagName);
+			clientClass.doWrite(tagName, Integer.toString(i));
 			System.out.println(result);
 		}
 	}
