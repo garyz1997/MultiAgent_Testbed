@@ -11,6 +11,5 @@
 	<classpathentry kind="lib" path="lib/slf4j.api_1.6.4.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/JADE-bin-4.5.0/jade/lib/jade.jar"/>
-	<classpathentry kind="lib" path="lib/JADE-examples-4.5.0/jade/lib/jadeExamples.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

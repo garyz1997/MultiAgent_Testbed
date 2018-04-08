@@ -6,6 +6,8 @@ import jade.wrapper.AgentContainer;
 import jade.wrapper.AgentController;
 import jade.wrapper.StaleProxyException;
 import jade.core.behaviours.*;
+import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
 
 
 public class rfid3 extends Agent{
@@ -28,19 +30,15 @@ public class rfid3 extends Agent{
 		//opc=new Client(allTags);
 		
 		opc=new ClientPython();
+		//Converts actual tag names to simulated tag names for python version of OPC client
+		opc.SimulatingTags();
 		
 		opc.init();
 		opc.connect();
 		opc.doRead();
 			
-		try{
-		Thread.sleep(1000);
-		}catch(Exception e){}
-		System.out.println(opc.getValue("Test.PLC.Message1"));
-		System.out.println(opc.getValue("Test.PLC.Message2"));
-		System.out.println(opc.getValue("Test.PLC.Message3"));
 		addBehaviour(new checkPartPresent(this,100));
-		opc.closeConnection();
+		addBehaviour(new releasePallet());
 	}
 	
 	private class checkPartPresent extends TickerBehaviour{
@@ -48,34 +46,41 @@ public class rfid3 extends Agent{
 			super(a, period);
 		}
 		protected void onTick(){
-			String palletPresent=opc.getValue("Pallet_Presense_Sensor");
+			String palletPresent=opc.getValue("Conv_N053:I.Data[3].1");
 			String tagPresent="0";
 			String processNumber=null;
 			String partNumber=null;
+			String tagReadyForReading=null;
 			//wait 250 milliseconds if there is a part present
-			if(palletPresent.equals("1")){
+			if(palletPresent.equals("1"))
+			{
 					//Wait 250 ms if there is a pallet present before checking for part presence
 					try {
-						Thread.sleep(500);
+						Thread.sleep(250);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-					tagPresent = opc.getValue("Tag_Presense_Sensor");
-				}
+					tagPresent = opc.getValue("RFID_N055:I.Channel[0].TagPresent");
+			}
 			//Exit onTick() if there is no pallet present
 			else{
 				emptyPalletLocked=false;
 				return;
 			}
 			//If there is an empty pallet and this stuff hasn't already been done for the empty pallet
-			if(tagPresent.equals("0") && emptyPalletLocked==false){
+			if(tagPresent.equals("0") && emptyPalletLocked==false)
+			{
 				//Once old part is gone, reset lock on agent creator
 				AgentCreatorLocked=false;
 				//Send message to all part agents saying there is empty pallet
-				System.out.println("Inforing part agents that there is empy pallet present");
+				//TO DO
+				System.out.println("Informing part agents that there is empy pallet present");
 				emptyPalletLocked=true;
+				return;
 			}
-			if(tagPresent.equals("1") && AgentCreatorLocked==false){
+			tagReadyForReading=opc.getValue("UpdateStep_RFID3");
+			if(tagPresent.equals("1") && AgentCreatorLocked==false && tagReadyForReading.equals("5"))
+			{
 				processNumber=opc.getValue("R3J_Current_Process_NO");
 				partNumber=opc.getValue("R3J_Current_Part_NO");
 				 Object[] init = new Object[1];
@@ -93,9 +98,36 @@ public class rfid3 extends Agent{
 			}
 		}
 	}
+	private class releasePallet extends CyclicBehaviour {
+		public void action(){
+			MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.REQUEST);
+			ACLMessage msg = myAgent.receive(mt);
+			if (msg != null) 
+			{
+				String content = msg.getContent();
+				if (content == "Release Pallet")
+				{
+					opc.doWrite("C2RobotStop.Ext", "0");
+					opc.doWrite("C2RobotStop.Ret", "1");
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					opc.doWrite("C2RobotStop.Ext", "1");
+					opc.doWrite("C2RobotStop.Ret", "0");
+				}
+					
+			}
+			else {
+				block();
+			}
+		}
+		
+	}
 	protected void takeDown() {
 		// Printout a dismissal message
-		//opc.closeConnection();
+		opc.closeConnection();
 		System.out.println(getAID().getName()+" terminating.");
 	}
 

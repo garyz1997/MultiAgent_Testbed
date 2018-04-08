@@ -23,6 +23,7 @@ Boston, MA  02111-1307, USA.
 
 package examples.bookTrading;
 
+
 import jade.core.Agent;
 import jade.core.AID;
 import jade.core.behaviours.*;
@@ -51,7 +52,7 @@ public class BookBuyerAgent extends Agent {
 			System.out.println("Target book is "+targetBookTitle);
 
 			// Add a TickerBehaviour that schedules a request to seller agents every minute
-			addBehaviour(new TickerBehaviour(this, 60000) {
+			addBehaviour(new TickerBehaviour(this, 30000) {
 				protected void onTick() {
 					System.out.println("Trying to buy "+targetBookTitle);
 					// Update the list of seller agents
@@ -74,6 +75,7 @@ public class BookBuyerAgent extends Agent {
 
 					// Perform the request
 					myAgent.addBehaviour(new RequestPerformer());
+					System.out.println("Added new request performer");
 				}
 			} );
 		}
@@ -105,6 +107,7 @@ public class BookBuyerAgent extends Agent {
 		public void action() {
 			switch (step) {
 			case 0:
+				System.out.println("Case 0");
 				// Send the cfp to all sellers
 				ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
 				for (int i = 0; i < sellerAgents.length; ++i) {
@@ -120,6 +123,7 @@ public class BookBuyerAgent extends Agent {
 				step = 1;
 				break;
 			case 1:
+				System.out.println("Case 1");
 				// Receive all proposals/refusals from seller agents
 				ACLMessage reply = myAgent.receive(mt);
 				if (reply != null) {
@@ -144,6 +148,7 @@ public class BookBuyerAgent extends Agent {
 				}
 				break;
 			case 2:
+				System.out.println("Case 2");
 				// Send the purchase order to the seller that provided the best offer
 				ACLMessage order = new ACLMessage(ACLMessage.ACCEPT_PROPOSAL);
 				order.addReceiver(bestSeller);
@@ -157,6 +162,7 @@ public class BookBuyerAgent extends Agent {
 				step = 3;
 				break;
 			case 3:      
+				System.out.println("Case 3");
 				// Receive the purchase order reply
 				reply = myAgent.receive(mt);
 				if (reply != null) {

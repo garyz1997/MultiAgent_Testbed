@@ -1,16 +1,12 @@
 package Agents;
+import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 public class test {
-	public static void main(String[] args){
-		int num=0;
-		switch(num){
-		case 0:
-			System.out.println("L");
-			num=1;
-			break;
-		
-		case 1:
-			System.out.println("P" + num);
-		}
+	public static void main(String[] args) throws FileNotFoundException{
+		ClientPython opc=new ClientPython();
+		opc.SimulatingTags();
+		System.out.println(opc.getValue("Conv_N053:I.Data[3].1"));
 	}
 }

@@ -1,10 +1,12 @@
 package Agents;
 
+import jade.core.AID;
 import jade.core.Agent;
 import jade.wrapper.AgentContainer;
 import jade.wrapper.AgentController;
 import jade.wrapper.StaleProxyException;
 import jade.core.behaviours.*;
+import jade.lang.acl.ACLMessage;
 
 
 public class PartAgent extends Agent
@@ -25,8 +27,14 @@ public class PartAgent extends Agent
 		}
 
 
-		if (processNumber != "4" || partNumber == 1)//part doesnt need anything here
+		if (processNumber != "3" || partNumber == "1")//part doesn't need anything here
 		{//tell RFID to send sled
+			System.out.println("Sending message to RFID Agent to let pallet pass");
+			ACLMessage releasePart = new ACLMessage( ACLMessage.REQUEST );
+			releasePart.addReceiver(new AID("rfid3Agent", AID.ISLOCALNAME));
+			releasePart.setContent("Release Pallet");
+			send(releasePart);
+		}
 
 		}
 		else//part needs a process here depending on part #

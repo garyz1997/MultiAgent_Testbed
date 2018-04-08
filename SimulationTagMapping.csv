@@ -1,0 +1,16 @@
+Actual Tag Name,Simulated Tag Name
+RFID------------------------------,RFID---------------------------------------
+Conv_N053:I.Data[3].1,Pallet_Presense_Sensor
+RFID_N055:I.Channel[0].TagPresent,Tag_Presense_Sensor
+UpdateStep_RFID3,UpdateStep_RFID3
+R3J_Current_Process_NO,R3J_Current_Process_NO
+R3J_Current_Part_NO,R3J_Current_Part_NO
+C2RobotStop.Ext,C2RobotStopExt
+C2RobotStop.Ret,C2RobotStopRet
+Robot----------------------,Robot------------------------------
+Fanuc_Rbt_C2:I.Data[0].2,
+Fanuc_Rbt_C2:I.Data[0].3,
+Fanuc_Rbt_C2:I.Data[0].4,
+Fanuc_Rbt_C2:I.Data[0].5,
+Fanuc_Rbt_C2:O.Data[0].0,
+Fanuc_Rbt_C2:O.Data[0].1,
