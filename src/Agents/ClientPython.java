@@ -25,7 +25,11 @@ public class ClientPython {
 			fileReader = new BufferedReader(new FileReader(fileToParse));
 			while((line=fileReader.readLine()) != null){
 				String[] tokens = line.split(DELIMITER);
-				map.put(tokens[0], tokens[1]);
+				//Ignore blank lines
+				if(tokens.length > 0){
+					//Add to map. The key is the actual tag and the definition is the simulated tag
+					map.put(tokens[0], tokens[1]);
+				}
 			}
 		}
 		catch (Exception e){

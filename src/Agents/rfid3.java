@@ -1,5 +1,6 @@
 package Agents;
 
+import jade.core.AID;
 //import BookSellerAgent.PurchaseOrdersServer;
 import jade.core.Agent;
 import jade.wrapper.AgentContainer;
@@ -21,6 +22,7 @@ public class rfid3 extends Agent{
 	int agentNum = 0;
 	boolean AgentCreatorLocked=false;
 	boolean emptyPalletLocked=false;
+	boolean informRobotLock=false;
 		
 	protected void setup(){
 		System.out.println(getAID().getName()+" is ready.");
@@ -68,15 +70,31 @@ public class rfid3 extends Agent{
 				return;
 			}
 			//If there is an empty pallet and this stuff hasn't already been done for the empty pallet
-			if(tagPresent.equals("0") && emptyPalletLocked==false)
+			if(tagPresent.equals("0"))
 			{
 				//Once old part is gone, reset lock on agent creator
 				AgentCreatorLocked=false;
+				//Next time tagPresent goes high, a new product agent will be created
 				//Send message to all part agents saying there is empty pallet
-				//TO DO
-				System.out.println("Informing part agents that there is empy pallet present");
-				emptyPalletLocked=true;
-				return;
+				if(informRobotLock==false){
+					//Send messsage to robot agent to reset all Robot DIs
+					ACLMessage noTagPresent = new ACLMessage( ACLMessage.INFORM);
+					noTagPresent.addReceiver(new AID("robotAgent", AID.ISLOCALNAME));
+					noTagPresent.setContent("no tag present");
+					send(noTagPresent);
+					informRobotLock=true;
+					//Will be unlocked once tagPresent goes low
+				}
+				if(emptyPalletLocked==false){
+					//TO DO
+					System.out.println("Informing part agents that there is empy pallet present");
+					emptyPalletLocked=true;
+					return;
+				}
+			}
+			if(tagPresent.equals("1")){
+				informRobotLock=false;
+				//Next time tag present goes low, message will be sent to robot agent to reset all Robot DIs
 			}
 			tagReadyForReading=opc.getValue("UpdateStep_RFID3");
 			if(tagPresent.equals("1") && AgentCreatorLocked==false && tagReadyForReading.equals("5"))
@@ -93,11 +111,14 @@ public class rfid3 extends Agent{
 				} catch (StaleProxyException e) {
 					e.printStackTrace();
 				}
+				//Increment product agent count
 				agentNum++;
 				AgentCreatorLocked=true;
+				//AgentCreatorLocked will be unlocked once tag present goes low
 			}
 		}
 	}
+	//This behavior can release a pallet with a part on it if the part requests this action
 	private class releasePallet extends CyclicBehaviour {
 		public void action(){
 			MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.REQUEST);

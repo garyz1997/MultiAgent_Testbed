@@ -35,16 +35,14 @@ public class PartAgent extends Agent
 			releasePart.setContent("Release Pallet");
 			send(releasePart);
 		}
-
-		}
-		else//part needs a process here depending on part #
+		else//part needs a process here. For now, send part# 2 to CNC 3, and part# 4 to CNC 4
 		{
-			if (partNumber == 2)
+			if (partNumber == "2")
 			{//tell ROBOT to move part to CNC3
 
 				location = 2;
 			}
-			else if (partNumber == 3)
+			else if (partNumber == "3")
 			{//tell ROBOT to move part to CNC4
 
 				location = 2;
@@ -66,7 +64,8 @@ public class PartAgent extends Agent
 		}
 		protected void onTick()
 		{
-			switch (location) {
+			switch (location) 
+			{
 			case 2://CNCbegin
 				break;
 			case 3://CNCend
@@ -76,8 +75,8 @@ public class PartAgent extends Agent
 			case 5://Exit
 				break;
 
+			}
 		}
-
 	}
 	protected void takeDown() 
 	{

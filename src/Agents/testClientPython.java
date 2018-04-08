@@ -3,7 +3,7 @@ import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-public class test {
+public class testClientPython {
 	public static void main(String[] args) throws FileNotFoundException{
 		ClientPython opc=new ClientPython();
 		opc.SimulatingTags();

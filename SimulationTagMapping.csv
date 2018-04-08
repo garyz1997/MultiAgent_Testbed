@@ -1,16 +1,19 @@
-Actual Tag Name,Simulated Tag Name
-RFID------------------------------,RFID---------------------------------------
-Conv_N053:I.Data[3].1,Pallet_Presense_Sensor
-RFID_N055:I.Channel[0].TagPresent,Tag_Presense_Sensor
-UpdateStep_RFID3,UpdateStep_RFID3
-R3J_Current_Process_NO,R3J_Current_Process_NO
-R3J_Current_Part_NO,R3J_Current_Part_NO
-C2RobotStop.Ext,C2RobotStopExt
-C2RobotStop.Ret,C2RobotStopRet
-Robot----------------------,Robot------------------------------
-Fanuc_Rbt_C2:I.Data[0].2,
-Fanuc_Rbt_C2:I.Data[0].3,
-Fanuc_Rbt_C2:I.Data[0].4,
-Fanuc_Rbt_C2:I.Data[0].5,
-Fanuc_Rbt_C2:O.Data[0].0,
-Fanuc_Rbt_C2:O.Data[0].1,
+Actual Tag Name,Simulated Tag Name,Description
+RFID------------------------------,RFID---------------------------------------,RFID---------------------------------------
+Conv_N053:I.Data[3].1,Pallet_Presense_Sensor,If pallet is present at robot 2 stop
+RFID_N055:I.Channel[0].TagPresent,Tag_Presense_Sensor,If part is present at RFID at robot 2 stop
+UpdateStep_RFID3,UpdateStep_RFID3,"Checks what step the RFID reader is on. If the step is 5, tag is ready for reading."
+R3J_Current_Process_NO,R3J_Current_Process_NO,Process # of part (should be 3 if to be processed in cell 2)
+R3J_Current_Part_NO,R3J_Current_Part_NO,Part number of part (Should be 2 or 3 to be processed in cell 2)
+C2RobotStop.Ext,C2RobotStopExt,Extends robot stop
+C2RobotStop.Ret,C2RobotStopRet,Retracts robot stop
+,,
+Robot----------------------,Robot------------------------------,Robot------------------------------
+Fanuc_Rbt_C2:I.Data[0].2,,Pick from conveyor and drop on CNC3 program running
+Fanuc_Rbt_C2:I.Data[0].3,,Pick from conveyor and drop on CNC4 program running
+Fanuc_Rbt_C2:I.Data[0].4,,Pick from CNC3 and drop on conveyor running
+Fanuc_Rbt_C2:I.Data[0].5,,Pick from CNC4 and drop on conveyor running
+Fanuc_Rbt_C2:O.Data[0].0,,Pick form conveyor and drop on CNC3
+Fanuc_Rbt_C2:O.Data[0].1,,Pick form conveyor and drop on CNC4
+Fanuc_Rbt_C2:O.Data[0].2,,Pick from CNC3 and drop on conveyor
+Fanuc_Rbt_C2:O.Data[0].3,,Pick from CNC4 and drop on conveyor
