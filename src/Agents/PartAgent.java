@@ -49,11 +49,8 @@ public class PartAgent extends Agent
 			}
 		}
 
-		// Add the behaviour serving queries from buyer agents
-		addBehaviour(new OfferRequestsServer());
-
-		// Add the behaviour serving purchase orders from buyer agents
-		addBehaviour(new PurchaseOrdersServer());
+		// Add the logic behavior
+		addBehaviour(new partLogic());
 	}
 	
 	private class partLogic extends TickerBehaviour
