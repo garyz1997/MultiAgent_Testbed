@@ -75,7 +75,7 @@ public class PartAgent extends Agent
 				}
 				break;
 			case 2://CNCbegin
-				System.out.println("CNC servie has completed")
+				System.out.println("CNC servie has completed");
 				location = 3;
 				break;
 			case 3://CNCend
