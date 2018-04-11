@@ -14,9 +14,8 @@ public class RobotAgent extends Agent{
 		opc=new ClientPython();
 		opc.SimulatingTags();
 		addBehaviour(new RobotRequest());
-		
-		
 	}
+	
 	private class RobotRequest extends CyclicBehaviour{
 		public void action(){
 			//Get messages that are requests
@@ -25,54 +24,47 @@ public class RobotAgent extends Agent{
 			ACLMessage msg = myAgent.receive(mt);
 			if(msg != null){
 				ACLMessage reply = msg.createReply();
-				if(msg.getContent().equals("busy?"))
-				{
-					reply.setPerformative(ACLMessage.INFORM);
-					getRobotStatus();
-					if(busy){
-						reply.setContent("busy");
-					}
-					else{
-						reply.setContent("free");
-					}
+				getRobotStatus();
+				if(busy){
+					reply.setContent("busy");
+					send(reply);
+					return;
 				}
-				//if the request has the word "run" in it
-				else if(msg.getContent().indexOf("run") != -1)
-				{
-					//SEE RUNG 15: NEED TO RESET THE ROBOT PROGRAM TO RUN TAGS WHEN TAG PRESENT GOES LOW
-					if(msg.getContent()=="dropCNC3"){
-						opc.doWrite("Fanuc_Rbt_C2:O.Data[0].0","1");
-					}
-					if(msg.getContent()=="dropCNC4"){
-						opc.doWrite("Fanuc_Rbt_C2:O.Data[0].1","1");
-					}
-					
+				else{
+					reply.setContent("running program");
+					send(reply);
 				}
-			}
-			else{
-				block();
-			}
+				if(msg.getContent()=="dropCNC3"){
+					opc.doWrite("Fanuc_Rbt_C2:O.Data[0].0","1");
+				}
+				if(msg.getContent()=="dropCNC4"){
+					opc.doWrite("Fanuc_Rbt_C2:O.Data[0].1","1");
+				}
+				else{
+					block();
+				}
 			
-			//Looks for messsages from RFID agent that indicate tag no long present
-			//This means we should reset robot DIs
-			MessageTemplate mt2 = MessageTemplate.MatchPerformative(ACLMessage.INFORM);
-			ACLMessage msg2 = myAgent.receive(mt2);
-			if(msg2 != null)
-			{
-				if(msg2.getContent().equals("no tag present")){
-					//Reset all robot DIs
-					opc.doWrite("Fanuc_Rbt_C2:O.Data[0].0","0");
-					opc.doWrite("Fanuc_Rbt_C2:O.Data[0].1","0");
-					opc.doWrite("Fanuc_Rbt_C2:O.Data[0].2","0");
-					opc.doWrite("Fanuc_Rbt_C2:O.Data[0].3","0");
+				//Looks for messsages from RFID agent that indicate tag no long present
+				//This means we should reset robot DIs
+				MessageTemplate mt2 = MessageTemplate.MatchPerformative(ACLMessage.INFORM);
+				ACLMessage msg2 = myAgent.receive(mt2);
+				if(msg2 != null)
+				{
+					if(msg2.getContent().equals("no tag present")){
+						//Reset all robot DIs
+						opc.doWrite("Fanuc_Rbt_C2:O.Data[0].0","0");
+						opc.doWrite("Fanuc_Rbt_C2:O.Data[0].1","0");
+						opc.doWrite("Fanuc_Rbt_C2:O.Data[0].2","0");
+						opc.doWrite("Fanuc_Rbt_C2:O.Data[0].3","0");
+					}
+				}
+				else{
+					block();
 				}
 			}
-			else{
-				block();
-			}
-		}
+	}
 		private void getRobotStatus(){
-			String prog1, prog2, prog3, prog4;
+			String prog1, prog2, prog3, prog4,CNC3NotInCycle,CNC4NotInCycle;
 			//Pick from conveyor and drop on CNC3 program running
 			prog1=opc.getValue("Fanuc_Rbt_C2:I.Data[0].2");
 			//Pick from conveyor and drop on CNC4 program running
@@ -81,7 +73,9 @@ public class RobotAgent extends Agent{
 			prog3=opc.getValue("Fanuc_Rbt_C2:I.Data[0].4");
 			//Pick from CNC4 and drop on conveyor running
 			prog4=opc.getValue("Fanuc_Rbt_C2:I.Data[0].5");
-			if(prog1=="0"&&prog2=="0"&&prog3=="0"&&prog4=="0"){
+			CNC3NotInCycle=opc.getValue("FromCNC3.Bools.5");
+			CNC4NotInCycle=opc.getValue("FromCNC4.Bools.5");
+			if(prog1=="0" && prog2=="0" && prog3=="0" && prog4=="0" && CNC3NotInCycle=="1" && CNC4NotInCycle=="1"){
 				busy=false;
 			}
 			else{

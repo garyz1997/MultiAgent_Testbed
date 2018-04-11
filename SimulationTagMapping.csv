@@ -9,11 +9,11 @@ C2RobotStop.Ext,C2RobotStopExt,Extends robot stop
 C2RobotStop.Ret,C2RobotStopRet,Retracts robot stop
 ,,
 Robot----------------------,Robot------------------------------,Robot------------------------------
-Fanuc_Rbt_C2:I.Data[0].2,,Pick from conveyor and drop on CNC3 program running
-Fanuc_Rbt_C2:I.Data[0].3,,Pick from conveyor and drop on CNC4 program running
-Fanuc_Rbt_C2:I.Data[0].4,,Pick from CNC3 and drop on conveyor running
-Fanuc_Rbt_C2:I.Data[0].5,,Pick from CNC4 and drop on conveyor running
-Fanuc_Rbt_C2:O.Data[0].0,,Pick form conveyor and drop on CNC3
-Fanuc_Rbt_C2:O.Data[0].1,,Pick form conveyor and drop on CNC4
-Fanuc_Rbt_C2:O.Data[0].2,,Pick from CNC3 and drop on conveyor
-Fanuc_Rbt_C2:O.Data[0].3,,Pick from CNC4 and drop on conveyor
+Fanuc_Rbt_C2:I.Data[0].2,Robot_I_Data0_2,Pick from conveyor and drop on CNC3 program running
+Fanuc_Rbt_C2:I.Data[0].3,Robot_I_Data0_3,Pick from conveyor and drop on CNC4 program running
+Fanuc_Rbt_C2:I.Data[0].4,Robot_I_Data0_4,Pick from CNC3 and drop on conveyor running
+Fanuc_Rbt_C2:I.Data[0].5,Robot_I_Data0_5,Pick from CNC4 and drop on conveyor running
+Fanuc_Rbt_C2:O.Data[0].0,Robot_O_Data0_0,Pick form conveyor and drop on CNC3
+Fanuc_Rbt_C2:O.Data[0].1,Robot_O_Data0_1,Pick form conveyor and drop on CNC4
+Fanuc_Rbt_C2:O.Data[0].2,Robot_O_Data0_2,Pick from CNC3 and drop on conveyor
+Fanuc_Rbt_C2:O.Data[0].3,Robot_O_Data0_3,Pick from CNC4 and drop on conveyor
