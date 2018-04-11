@@ -7,7 +7,12 @@ import jade.wrapper.AgentController;
 import jade.wrapper.StaleProxyException;
 import jade.core.behaviours.*;
 import jade.lang.acl.ACLMessage;
-
+import java.util.Arrays;
+import jade.lang.acl.MessageTemplate;
+import jade.domain.DFService;
+import jade.domain.FIPAException;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
 
 public class PartAgent extends Agent
 {
@@ -20,7 +25,7 @@ public class PartAgent extends Agent
 	protected void setup()
 	{
 		System.out.println(getAID().getName()+" is ready.");
-
+		doSuspend();//Suspend Agent upon creation. Resume Agent via GUI to start it up.
 		Object[] args = getArguments();
 		if (args != null && args.length > 0) {
 			processNumber = (String) args[0];
@@ -28,7 +33,7 @@ public class PartAgent extends Agent
 		}
 
 		// Add the logic behavior
-		addBehaviour(new partLogic());
+		addBehaviour(new partLogic(this,100));
 
 		// Add the behaviour serving busy messages from the robot
 		addBehaviour(new BusyHandler());
@@ -70,6 +75,8 @@ public class PartAgent extends Agent
 				}
 				break;
 			case 2://CNCbegin
+				System.out.println("CNC servie has completed")
+				location = 3;
 				break;
 			case 3://CNCend
 				System.out.println("Sending message to ROBOT to check if it and PALLET are free");
