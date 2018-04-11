@@ -31,13 +31,13 @@ public class RobotAgent extends Agent{
 					return;
 				}
 				else{
-					reply.setContent("running program");
+					reply.setContent("free");
 					send(reply);
 				}
-				if(msg.getContent()=="dropCNC3"){
+				if(msg.getContent().equals("dropCNC3")){
 					opc.doWrite("Fanuc_Rbt_C2:O.Data[0].0","1");
 				}
-				if(msg.getContent()=="dropCNC4"){
+				if(msg.getContent().equals("dropCNC4")){
 					opc.doWrite("Fanuc_Rbt_C2:O.Data[0].1","1");
 				}
 				else{
@@ -75,7 +75,7 @@ public class RobotAgent extends Agent{
 			prog4=opc.getValue("Fanuc_Rbt_C2:I.Data[0].5");
 			CNC3NotInCycle=opc.getValue("FromCNC3.Bools.5");
 			CNC4NotInCycle=opc.getValue("FromCNC4.Bools.5");
-			if(prog1=="0" && prog2=="0" && prog3=="0" && prog4=="0" && CNC3NotInCycle=="1" && CNC4NotInCycle=="1"){
+			if(prog1.equals("0") && prog2.equals("0") && prog3.equals("0") && prog4.equals("0") && CNC3NotInCycle.equals("1") && CNC4NotInCycle.equals("1")){
 				busy=false;
 			}
 			else{

@@ -1,19 +1,25 @@
-Actual Tag Name,Simulated Tag Name,Description
-RFID------------------------------,RFID---------------------------------------,RFID---------------------------------------
-Conv_N053:I.Data[3].1,Pallet_Presense_Sensor,If pallet is present at robot 2 stop
-RFID_N055:I.Channel[0].TagPresent,Tag_Presense_Sensor,If part is present at RFID at robot 2 stop
-UpdateStep_RFID3,UpdateStep_RFID3,"Checks what step the RFID reader is on. If the step is 5, tag is ready for reading."
-R3J_Current_Process_NO,R3J_Current_Process_NO,Process # of part (should be 3 if to be processed in cell 2)
-R3J_Current_Part_NO,R3J_Current_Part_NO,Part number of part (Should be 2 or 3 to be processed in cell 2)
-C2RobotStop.Ext,C2RobotStopExt,Extends robot stop
-C2RobotStop.Ret,C2RobotStopRet,Retracts robot stop
-,,
-Robot----------------------,Robot------------------------------,Robot------------------------------
-Fanuc_Rbt_C2:I.Data[0].2,Robot_I_Data0_2,Pick from conveyor and drop on CNC3 program running
-Fanuc_Rbt_C2:I.Data[0].3,Robot_I_Data0_3,Pick from conveyor and drop on CNC4 program running
-Fanuc_Rbt_C2:I.Data[0].4,Robot_I_Data0_4,Pick from CNC3 and drop on conveyor running
-Fanuc_Rbt_C2:I.Data[0].5,Robot_I_Data0_5,Pick from CNC4 and drop on conveyor running
-Fanuc_Rbt_C2:O.Data[0].0,Robot_O_Data0_0,Pick form conveyor and drop on CNC3
-Fanuc_Rbt_C2:O.Data[0].1,Robot_O_Data0_1,Pick form conveyor and drop on CNC4
-Fanuc_Rbt_C2:O.Data[0].2,Robot_O_Data0_2,Pick from CNC3 and drop on conveyor
-Fanuc_Rbt_C2:O.Data[0].3,Robot_O_Data0_3,Pick from CNC4 and drop on conveyor
+Actual Tag Name,Simulated Tag Name,Address,Type,Description
+RFID------------------------------,RFID---------------------------------------,,,RFID---------------------------------------
+Conv_N053:I.Data[3].1,Pallet_Presense_Sensor,K0001,Boolean,If pallet is present at robot 2 stop
+RFID_N055:I.Channel[0].TagPresent,Tag_Presense_Sensor,K0002,Boolean,If part is present at RFID at robot 2 stop
+UpdateStep_RFID3,UpdateStep_RFID3,K1000,Short,"Checks what step the RFID reader is on. If the step is 5, tag is ready for reading."
+R3J_Current_Process_NO,R3J_Current_Process_NO,K1100,Short,Process # of part (should be 3 if to be processed in cell 2)
+R3J_Current_Part_NO,R3J_Current_Part_NO,K1200,Short,Part number of part (Should be 2 or 3 to be processed in cell 2)
+C2RobotStop.Ext,C2RobotStopExt,K0006,Boolean,Extends robot stop
+C2RobotStop.Ret,C2RobotStopRet,K0007,Boolean,Retracts robot stop
+,,,,
+Robot----------------------,Robot------------------------------,,,Robot------------------------------
+Fanuc_Rbt_C2:I.Data[0].2,Robot_I_Data0_2,K0008,Boolean,Pick from conveyor and drop on CNC3 program running
+Fanuc_Rbt_C2:I.Data[0].3,Robot_I_Data0_3,K0009,Boolean,Pick from conveyor and drop on CNC4 program running
+Fanuc_Rbt_C2:I.Data[0].4,Robot_I_Data0_4,K0010,Boolean,Pick from CNC3 and drop on conveyor running
+Fanuc_Rbt_C2:I.Data[0].5,Robot_I_Data0_5,K0011,Boolean,Pick from CNC4 and drop on conveyor running
+Fanuc_Rbt_C2:O.Data[0].0,Robot_O_Data0_0,K0012,Boolean,Pick form conveyor and drop on CNC3
+Fanuc_Rbt_C2:O.Data[0].1,Robot_O_Data0_1,K0013,Boolean,Pick form conveyor and drop on CNC4
+Fanuc_Rbt_C2:O.Data[0].2,Robot_O_Data0_2,K0014,Boolean,Pick from CNC3 and drop on conveyor
+Fanuc_Rbt_C2:O.Data[0].3,Robot_O_Data0_3,K0015,Boolean,Pick from CNC4 and drop on conveyor
+,,,,
+CNC3-------------------------,CNC3-----------------------,,,
+FromCNC3.Bools.5,FromCNC3Bools5,K0016,Boolean,Bit on when CNC is not in cycle
+,,,,
+CNC4-------------------------,CNC4-------------------------,,,
+FromCNC4.Bools.5,FromCNC4Bools5,K0017,Boolean,Bit on when CNC is not in cycle

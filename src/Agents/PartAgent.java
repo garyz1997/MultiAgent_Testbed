@@ -60,6 +60,11 @@ public class PartAgent extends Agent
 					if (!processNumber.equals("3") || partNumber.equals("1"))//part doesn't need anything here
 					{//tell RFID to send sled
 						System.out.println("No services can be done here");
+						System.out.println("Sending message to send pallet");
+						ACLMessage releasePart= new ACLMessage( ACLMessage.REQUEST );
+						releasePart.addReceiver(new AID("rfid3Agent", AID.ISLOCALNAME));
+						releasePart.setContent("Release Pallet");
+						send(releasePart);
 						location = 4;
 					}
 					else//part needs a process here. For now, send part# 2 to CNC 3, and part# 3 to CNC 4
@@ -67,19 +72,20 @@ public class PartAgent extends Agent
 						if (partNumber.equals("2"))
 						{//tell ROBOT to move part to CNC3, check robot is free, cnc is free 
 							System.out.println("Sending message to ROBOT to check if it and CNC3 are free");
-							ACLMessage checkRobotCNCFree = new ACLMessage( ACLMessage.REQUEST );
-							checkRobotCNCFree.addReceiver(new AID("RobotAgent", AID.ISLOCALNAME));
-							checkRobotCNCFree.setContent("Check CNC3 Free");
-							send(checkRobotCNCFree);
+							ACLMessage tryDropCNC3 = new ACLMessage( ACLMessage.REQUEST );
+							tryDropCNC3.addReceiver(new AID("RobotAgent", AID.ISLOCALNAME));
+							tryDropCNC3.setContent("dropCNC3");
+							send(tryDropCNC3);
 							lock = true;
+							//Stop sending requests to robot until robot responds
 						}
 						else if (partNumber.equals("3"))
 						{//tell ROBOT to move part to CNC4
 							System.out.println("Sending message to ROBOT to check if it and CNC4 are free");
-							ACLMessage checkRobotCNCFree = new ACLMessage( ACLMessage.REQUEST );
-							checkRobotCNCFree.addReceiver(new AID("RobotAgent", AID.ISLOCALNAME));
-							checkRobotCNCFree.setContent("Check CNC4 Free");
-							send(checkRobotCNCFree);
+							ACLMessage tryDropCNC4 = new ACLMessage( ACLMessage.REQUEST );
+							tryDropCNC4.addReceiver(new AID("RobotAgent", AID.ISLOCALNAME));
+							tryDropCNC4.setContent("dropCNC4");
+							send(tryDropCNC4);
 							lock = true;
 						}
 					}
@@ -177,7 +183,7 @@ public class PartAgent extends Agent
 				}
 				else if (location == 3)
 				{
-					System.out.println("The ROBOT and PALLET are free, moving to RFIDEnd");
+					System.out.println("The ROBOT is moving part to Conveyor");
 					location = 4;//RFIDEnd
 					lock = false;
 				}

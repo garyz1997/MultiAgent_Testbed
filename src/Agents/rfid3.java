@@ -39,7 +39,7 @@ public class rfid3 extends Agent{
 		opc.connect();
 		opc.doRead();
 			
-		addBehaviour(new checkPartPresent(this,100));
+		addBehaviour(new checkPartPresent(this,1000));
 		addBehaviour(new releasePallet());
 	}
 	
@@ -101,12 +101,19 @@ public class rfid3 extends Agent{
 			{
 				processNumber=opc.getValue("R3J_Current_Process_NO");
 				partNumber=opc.getValue("R3J_Current_Part_NO");
-				 Object[] init = new Object[1];
+				 Object[] init = new Object[2];
 				 init[0]=processNumber;
 				 init[1]=partNumber;
 				AgentContainer c = getContainerController();
 				try {
-					AgentController a = c.createNewAgent("PA"+Integer.toString(agentNum),"PartAgent",init);
+					try {
+						Thread.sleep(20);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					AgentController productAgent = c.createNewAgent("ProductAgent"+Integer.toString(agentNum),"Agents.PartAgent",init);
+					productAgent.start();
 					System.out.println("Created new Product Agent");
 				} catch (StaleProxyException e) {
 					e.printStackTrace();
@@ -125,13 +132,13 @@ public class rfid3 extends Agent{
 			ACLMessage msg = myAgent.receive(mt);
 			if (msg != null) 
 			{
-				String content = msg.getContent();
-				if (content == "Release Pallet")
+				System.out.println("Recieved message to send pallet");
+				if (msg.getContent().equals("Release Pallet"))
 				{
 					opc.doWrite("C2RobotStop.Ext", "0");
 					opc.doWrite("C2RobotStop.Ret", "1");
 					try {
-						Thread.sleep(1000);
+						Thread.sleep(5000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
