@@ -76,6 +76,7 @@ public class rfid3 extends Agent{
 				AgentCreatorLocked=false;
 				//Next time tagPresent goes high, a new product agent will be created
 				//Send message to all part agents saying there is empty pallet
+				
 				if(informRobotLock==false){
 					//Send messsage to robot agent to reset all Robot DIs
 					ACLMessage noTagPresent = new ACLMessage( ACLMessage.INFORM);
@@ -102,8 +103,9 @@ public class rfid3 extends Agent{
 				processNumber=opc.getValue("R3J_Current_Process_NO");
 				partNumber=opc.getValue("R3J_Current_Part_NO");
 				 Object[] init = new Object[2];
-				 init[0]=processNumber;
-				 init[1]=partNumber;
+				 //Want to send arguments as integers
+				 init[0]=Integer.parseInt(processNumber);
+				 init[1]=Integer.parseInt(partNumber);
 				AgentContainer c = getContainerController();
 				try {
 					try {

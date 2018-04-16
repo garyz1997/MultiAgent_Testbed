@@ -46,6 +46,9 @@ public class ClientPython {
 		if(useSimulation){
 			tagName = "AdvManLab.PLC." + map.get(tagName);
 		}
+		else{
+			tagName = "[AdvManLab]" + tagName;
+		}
 		Runtime rt = Runtime.getRuntime();
 		Process pr;
 		try {
