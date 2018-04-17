@@ -46,7 +46,9 @@ public class ClientPython {
 		if(useSimulation){
 			tagName = "AdvManLab.PLC." + map.get(tagName);
 		}
-		System.out.println(tagName);
+		else{
+			tagName = "[AdvManLab]" + tagName;
+		}
 		Runtime rt = Runtime.getRuntime();
 		Process pr;
 		try {
@@ -67,6 +69,9 @@ public class ClientPython {
 		return "Error";
 	}
 	public void doWrite(String tagName, String newValue){
+		if(useSimulation){
+			tagName = "AdvManLab.PLC." + map.get(tagName);
+		}
 		Runtime rt = Runtime.getRuntime();
 		Process pr;
 		try {
