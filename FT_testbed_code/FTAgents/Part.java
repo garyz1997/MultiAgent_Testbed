@@ -18,7 +18,9 @@ public class Part extends Agent {
 /**
 	   Data
 */
-	private int[] ServiceList = {1,2,4,5,3,6,7};//TODO get this from RFID
+	
+	private int[] ServiceList = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+	private Object[] args;
 /**
 	   0 is move command
 */ 
@@ -28,6 +30,10 @@ public class Part extends Agent {
 	protected void setup() 
 	{
 		doSuspend();//Suspend Agent upon creation. Resume Agent via GUI to start it up.
+		args = getArguments();
+		for (int a = 0; a < args.length; ++a) {
+			ServiceList[a] = Integer.valueOf((String) args[a]);
+		}
 		addBehaviour(new RequestPerformer(this,1000));		
 
 		// Add the behaviour serving proposal accepts

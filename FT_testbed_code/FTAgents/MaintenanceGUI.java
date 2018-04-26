@@ -42,7 +42,7 @@ class MaintenanceGUI extends JFrame {
 
         jcomp2 = new JButton("Reject");
         jcomp2.addActionListener
-        	(new ActionListener() 
+        	(new ActionListener() k
         		{
 					public void actionPerformed(ActionEvent ev) 
 					{

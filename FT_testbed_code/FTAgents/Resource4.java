@@ -27,10 +27,15 @@ public class Resource4 extends Agent {
 	private String ServiceList = "";
 	private RAGUI myGui;
 	private AID currPA;
+	private MaintenanceGUI2 MaintenanceGui;
 /**
 	   0 is move command
 */ 
 	protected void setup() {
+
+		// Add the behaviour serving maintenance requests
+		addBehaviour(new MaintenanceReq());
+
 		addBehaviour(new RequestPerformer(this, 100));
 	}
 
@@ -61,6 +66,7 @@ public class Resource4 extends Agent {
 				ACLMessage msg = myAgent.receive(mt);
 				if (msg != null){
 						runPython("python conv4.py");
+						try{ Thread.sleep(7000); } catch (Exception e){}
 						ACLMessage reply = msg.createReply();
 						reply.setPerformative(ACLMessage.CANCEL);
 						myAgent.send(reply);
@@ -122,6 +128,47 @@ public class Resource4 extends Agent {
 		ServiceList = "Remove the part from the system";
 		myGui = new RAGUI(this);
 		myGui.showGui();
+	}
+
+	
+	/**
+	   Inner class MaintenanceReq().
+	   This is the behaviour used by the RA to handle when another resource requests maintenance.
+	   The RA opens up a GUI asking the human if he can perform maintenance.
+	 */
+	private class MaintenanceReq extends CyclicBehaviour 
+	{
+		public void action() 
+		{
+			MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.FAILURE);
+			ACLMessage msg = myAgent.receive(mt);
+			if (msg != null)
+			{
+				MaintenanceGui = new MaintenanceGUI2((Resource4)myAgent);
+				MaintenanceGui.showGui();	
+			}
+			else 
+			{
+				block();
+			}
+		}
+	}  // End of inner class MaintenanceReq
+
+
+	protected void humanAcceptMaintenance()
+	{
+		System.out.println("Human has performed maintenance on resource 2");
+					ACLMessage MaintenanceAccept = new ACLMessage(ACLMessage.INFORM);
+					MaintenanceAccept.addReceiver(new AID("RA2", AID.ISLOCALNAME));
+					MaintenanceAccept.setContent("Maintenance has been performed on RA2");
+					this.send(MaintenanceAccept);
+		//maintenanceNeeded = false;
+		MaintenanceGui.dispose();
+	}
+
+	protected void humanDeclineMaintenance()
+	{
+		System.out.println("Human cannot perform maintenance on resource 2");
 	}
 
 	protected void runPython(String fileName)

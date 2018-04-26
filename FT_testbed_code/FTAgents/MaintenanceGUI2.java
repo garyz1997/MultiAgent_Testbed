@@ -7,12 +7,12 @@ import java.awt.event.*;
 import javax.swing.*;
 
 class MaintenanceGUI2 extends JFrame {
-	private Resource2 myAgent;
+	private Resource4 myAgent;
     	private JButton jcomp1;
     	private JButton jcomp2;
     	private JLabel jcomp3;
 	
-	MaintenanceGUI2(Resource2 a) 
+	MaintenanceGUI2(Resource4 a) 
 	{
 		super(a.getLocalName());
 		
@@ -35,7 +35,7 @@ class MaintenanceGUI2 extends JFrame {
 							public void actionPerformed(ActionEvent ev) 
 							{
 								try 
-								{//insert wheat to do when accept
+								{//insert what to do when accept
 									myAgent.humanAcceptMaintenance();
 								}
 								catch (Exception e) 
@@ -89,6 +89,7 @@ class MaintenanceGUI2 extends JFrame {
 			}
 		} );
 	}
+
 
 	public void showGui() {
 		pack();

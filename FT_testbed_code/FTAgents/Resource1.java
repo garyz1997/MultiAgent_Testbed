@@ -56,6 +56,7 @@ public class Resource1 extends Agent {
 			if (msg != null){
 				System.out.println("Running conveyor 1 and rejecting proposal");
 				runPython("python conv1.py");
+				try{ Thread.sleep(8000); } catch (Exception e){}
 				ACLMessage reply = msg.createReply();
 				reply.setPerformative(ACLMessage.REJECT_PROPOSAL);
 				reply.setContent("Sent Part to RA2");

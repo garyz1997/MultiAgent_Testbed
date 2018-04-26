@@ -53,9 +53,26 @@ public class Resource3 extends Agent {
 			MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.PROPOSE);
 			ACLMessage msg = myAgent.receive(mt);
 			if (msg != null){
+				int serviceNum = Integer.parseInt(msg.getContent());
 				System.out.println("Proposal received: "+Integer.parseInt(msg.getContent()));
-				if (Services[Integer.parseInt(msg.getContent())] == 1){
+				if (Services[serviceNum] == 1){
 					runPython("python RA3S" + msg.getContent() + ".py");
+					switch(serviceNum)
+					{
+						case 4:
+							try{ Thread.sleep(1000); } catch (Exception e){}
+							break;
+						case 5:
+							try{ Thread.sleep(5000); } catch (Exception e){}
+							break;
+						case 6:
+							try{ Thread.sleep(10000); } catch (Exception e){}
+							break;
+						default:
+							System.out.println("Invalid service");
+							try{ Thread.sleep(1000); } catch (Exception e){}
+							break;
+					}
 					ACLMessage reply = msg.createReply();
 					reply.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
 					reply.setContent("Did service" + msg.getContent());
@@ -64,6 +81,7 @@ public class Resource3 extends Agent {
 				}
 				else{
 					runPython("python conv3.py");
+					try{ Thread.sleep(3000); } catch (Exception e){}
 					ACLMessage reply = msg.createReply();
 					reply.setPerformative(ACLMessage.REJECT_PROPOSAL);
 					reply.setContent("Sent part to RA4");

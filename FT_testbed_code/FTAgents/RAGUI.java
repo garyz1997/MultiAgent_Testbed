@@ -74,7 +74,7 @@ class RAGUI extends JFrame {
 		        //set component bounds (only needed by Absolute Positioning)
 		        jcomp1.setBounds (20, 100, 100, 20);
 		        jcomp2.setBounds (125, 100, 100, 20);
-		        jcomp3.setBounds (40, 20, 245, 55);
+		        jcomp3.setBounds (10, 20, 245, 55);
 			}
 		}
 
